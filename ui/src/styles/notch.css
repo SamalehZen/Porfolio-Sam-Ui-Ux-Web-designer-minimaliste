@@ -1,0 +1,188 @@
+@font-face {
+  font-family: 'Inter Var';
+  src: url(../assets/notch/inter-var.woff2) format('woff2');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Inter Display';
+  src: url(../assets/notch/inter-display.woff2) format('woff2');
+  font-weight: 400 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+.notch {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  z-index: 60;
+  transform: translateX(-50%);
+  --notch-bg: #050505;
+  background: var(--notch-bg);
+  transition: background-color 0.32s ease;
+  border-radius: 0 0 20px 20px;
+  padding: 0;
+  width: 237px;
+  height: 55px;
+  overflow: visible;
+  cursor: pointer;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+.notch-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 10px;
+  padding: 8px;
+  height: 100%;
+  overflow: hidden;
+  border-radius: inherit;
+}
+.notch.is-open .notch-inner {
+  padding: 12px;
+  gap: 12px;
+  height: auto;
+}
+.notch-top {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 40px;
+  width: 100%;
+}
+.notch.is-open .notch-top { gap: 71px; }
+.notch-user { display: flex; align-items: center; gap: 8px; }
+.notch-avatar {
+  width: 39px;
+  height: 39px;
+  border-radius: 24px;
+  overflow: hidden;
+  flex-shrink: 0;
+  background: #2563eb;
+}
+.notch-avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.notch-info { display: flex; flex-direction: column; align-items: flex-start; }
+.notch-name {
+  font-family: 'Inter Var', sans-serif;
+  font-size: 16px;
+  line-height: 19.2px;
+  letter-spacing: -0.04em;
+  font-variation-settings: 'opsz' 32, 'wght' 500;
+  color: #fff;
+  white-space: nowrap;
+}
+.notch-role {
+  font-family: 'Inter Var', sans-serif;
+  font-size: 16px;
+  line-height: 19.2px;
+  letter-spacing: -0.04em;
+  font-variation-settings: 'opsz' 32, 'wght' 400;
+  color: rgba(255, 255, 255, 0.6);
+  white-space: nowrap;
+}
+.notch-time {
+  font-family: 'Inter Display', sans-serif;
+  font-size: 16px;
+  line-height: 16px;
+  letter-spacing: -0.04em;
+  font-weight: 500;
+  color: #fff;
+  white-space: nowrap;
+  margin-left: auto;
+}
+
+.notch-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  width: 100%;
+  opacity: 0;
+  pointer-events: none;
+  transform-origin: 50% 0;
+}
+.notch-weather {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'Inter Display', sans-serif;
+  font-size: 16px;
+  line-height: 19.2px;
+  letter-spacing: -0.04em;
+  font-weight: 500;
+  color: #fff;
+  white-space: nowrap;
+}
+.notch-weather svg { width: 20px; height: 20px; display: block; }
+.notch-avail { display: inline-flex; align-items: center; gap: 8px; }
+.notch-avail span {
+  font-family: 'Inter Var', sans-serif;
+  font-size: 14px;
+  line-height: 19.6px;
+  letter-spacing: -0.04em;
+  font-variation-settings: 'opsz' 32, 'wght' 400;
+  color: #00ff6f;
+  white-space: nowrap;
+}
+.notch-pulse { position: relative; width: 8px; height: 8px; flex-shrink: 0; }
+.notch-pulse i {
+  position: absolute; inset: 0; border-radius: 50%; background: #00ff6f;
+}
+.notch-pulse i + i { animation: notchPulse 2s ease-out infinite; }
+@keyframes notchPulse {
+  0% { transform: scale(1); opacity: 0.5; }
+  100% { transform: scale(2.6); opacity: 0; }
+}
+@media (max-width: 520px) {
+  .notch-name, .notch-role, .notch-time, .notch-weather { font-size: 14px; line-height: 17px; }
+  .notch-top { gap: 20px; }
+  .notch.is-open .notch-top { gap: 20px; }
+}
+
+
+
+.notch.is-open:hover .notch-inner { padding: 12px; }
+.notch.is-open:hover { padding: 0; }
+
+
+
+
+
+.notch::before, .notch::after {
+  content: '';
+  transform: translateZ(0);
+  position: absolute;
+  top: 0;
+  width: 48px;
+  height: 48px;
+  pointer-events: none;
+}
+.notch::before {
+  left: calc(-1 * var(--sh, 48px));
+  width: var(--sh, 48px);
+  height: var(--sh, 48px);
+  border-top-right-radius: calc(16px + 16px * var(--p, 0));
+  box-shadow: 8px -34px 0 1px var(--notch-bg, #050505);
+}
+.notch::after {
+  right: calc(-1 * var(--sh, 48px));
+  width: var(--sh, 48px);
+  height: var(--sh, 48px);
+  border-top-left-radius: calc(16px + 16px * var(--p, 0));
+  box-shadow: -8px -34px 0 1px var(--notch-bg, #050505);
+}
+.notch-bottom { min-height: 24px; }
+
+
+
+
+.notch-bottom { opacity: var(--pb, 0); }
+.notch.is-open .notch-bottom { pointer-events: auto; }
+
+.notch::before, .notch::after { will-change: width, height, left, right, border-radius; }
+
+:root[data-theme='dark'] .notch { --notch-bg: #343434; }
+.notch::before, .notch::after { transition: box-shadow 0.32s ease; }

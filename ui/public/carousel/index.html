@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="fr" dir="ltr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=1200" />
+  <title>Fan Carousel — reconstitution 1:1</title>
+  <meta name="description" content="Reconstitution React/CSS du carrousel fan de cmsfancarousel.framer.website." />
+  <link rel="stylesheet" href="app.css" />
+  <style>
+    .back-home {
+      position: fixed; top: 18px; left: 18px; z-index: 99;
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 9px 16px; border-radius: 999px;
+      background: #111; color: #fff; text-decoration: none;
+      font: 500 12px/1 "Geist", system-ui, sans-serif; letter-spacing: .04em;
+      box-shadow: 0 6px 18px -8px rgba(0,0,0,.5);
+      transition: transform .2s ease, background .2s ease;
+    }
+    .back-home:hover { background: #16707a; transform: translateX(-2px); }
+    .back-home:focus-visible { outline: 2px solid #16707a; outline-offset: 3px; }
+  </style>
+</head>
+<body>
+  <a class="back-home" href="/ok/">← Retour au portfolio</a>
+  <div id="root"></div>
+  <script src="app.js"></script>
+</body>
+</html>
