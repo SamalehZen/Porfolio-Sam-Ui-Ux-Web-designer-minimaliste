@@ -3,3 +3,4 @@ ui/dist/
 ui/*.tsbuildinfo
 .DS_Store
 ui/dist-sam/
+ui/dist-ok/

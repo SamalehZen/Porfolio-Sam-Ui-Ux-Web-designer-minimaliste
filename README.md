@@ -5,7 +5,7 @@
 <h1 align="center">Oxira — Samaleh Mohamed Hassan Arka</h1>
 
 <p align="center">
-  <a href="https://component.hypeer.cloud/ok/"><strong>Live demo</strong></a>
+  <a href="https://hypeer.cloud/"><strong>Live demo</strong></a>
   ·
   <a href="#stack">Stack</a>
   ·
@@ -21,10 +21,6 @@
   <img alt="Tailwind" src="https://img.shields.io/badge/Tailwind_CSS-3-06B6D4?logo=tailwindcss&logoColor=white" />
   <img alt="Three.js" src="https://img.shields.io/badge/Three.js-WebGL-000000?logo=three.js&logoColor=white" />
 </p>
-
-Live at **https://hypeer.cloud/** (root build) and
-https://component.hypeer.cloud/ok/ (sub-path build). Both come from the same
-source; `BASE=/` builds for the root domain, the default builds for `/ok/`.
 
 A single-page portfolio (Djibouti) with an aviation-inspired identity: a cabin window with
 a draggable shade that switches the whole page to night mode, a 3D boarding-pass
@@ -46,8 +42,8 @@ plus two **three.js** scenes (the aircraft window and the boarding-pass reader).
   thumbnails that fan out on hover.
 - **Memories** — a fan of photographs with captions.
 - **Fan Carousel** — the Fahlo card opens the live component demo at
-  `/ok/carousel/` (5 cards, 3D fan, drag/keys/autoplay) with a back link to
-  the portfolio. The demo is shipped in the build from `ui/public/carousel/`.
+  the Fan Carousel demo (5 cards, 3D fan, drag/keys/autoplay) with a back link
+  to the portfolio. The demo ships from `ui/public/carousel/`.
 - **Dynamic island notch** — a fixed pill at the top (237 x 55 px, opens to
   276 x 99 px) with photo, name, live clock, weather and availability.
   Spring-driven size and shoulder curves, closes on any outside tap, and
@@ -79,7 +75,7 @@ plus two **three.js** scenes (the aircraft window and the boarding-pass reader).
 | --- | --- |
 | Framework | React 19 (function components, hooks, Suspense) |
 | Language | TypeScript 5 (strict, `.tsx` / `.ts`) |
-| Build | Vite 7, `base: '/ok/'` |
+| Build | Vite 7 |
 | Styling | Tailwind CSS 3 with measured theme tokens + a scoped stylesheet for complex visuals |
 | 3D | three.js, @react-three/fiber, @react-three/drei, @react-three/postprocessing |
 | Motion | CSS keyframes, `requestAnimationFrame` springs, SVG path lighting |
@@ -124,9 +120,9 @@ ok/
 ```bash
 cd ui
 npm install
-npm run dev       # http://localhost:5173/ok/
-npm run build     # production build -> ui/dist
-npm run preview   # serve the build under /ok/
+npm run dev        # http://localhost:5173/
+npm run build      # production build -> ui/dist
+npm run preview    # serve the production build
 ```
 
 Node 20+ recommended.
@@ -135,9 +131,8 @@ Node 20+ recommended.
 
 | Command | Description |
 | --- | --- |
-| `npm run dev` | Vite dev server under `/ok/` |
+| `npm run dev` | Vite dev server on http://localhost:5173/ |
 | `npm run build` | Type-check then bundle to `dist/` |
-| `npm run build:root` | Bundle for the apex domain (`base: '/'` → `dist-sam/`) |
 | `npm run typecheck` | `tsc --noEmit` |
 | `npm run lint` | ESLint (flat config, react-hooks) |
 | `npm run format` | Prettier over `src` |
@@ -159,37 +154,14 @@ and animation strategies, the two 3D scenes and the build/delivery model.
   fonts, no analytics, 473 KB gzip JS including three.js.
 - **Fallbacks** — no WebGL: static sky artwork; reduced motion: no gateway.
 
-## Deployment
+## Build
 
 ```bash
-cd ui && npm run build
-rsync -a --delete dist/ /var/www/portfolio/ok/
+cd ui
+npm install
+npm run build           # -> ui/dist
 ```
 
-Production runs on a single host, served by two Caddy vhosts:
-
-| URL | Served from | Container |
-| --- | --- | --- |
-| https://hypeer.cloud/ | `/var/www/sam` (root build, `BASE=/`) | `sam-site` (nginx) |
-| https://component.hypeer.cloud/ok/ | `/opt/fan-carousel/dist/ok` (`BASE=/ok/`) | `fan-carousel` (nginx) |
-
-```bash
-# root domain (hypeer.cloud)
-cd ui && BASE=/ npx vite build --outDir dist-sam --emptyOutDir
-rsync -a --delete dist-sam/ /var/www/sam/
-
-# sub-path (component.hypeer.cloud/ok/)
-cd ui && npm run build
-rsync -a --delete dist/ /opt/fan-carousel/dist/ok/
-```
-
-`/ok/carousel/` lives in `ui/public/carousel/` (own `app.js`, `app.css`,
-`assets/`), so `npm run build` copies it to `dist/carousel/` and the normal
-deploy ships it. It is intentionally outside the React bundle.
-
-## Credits
-
-Design reference: [mikes.cv](https://www.mikes.cv).
-Typefaces, photography, logos and copy belong to their respective owners and
-are included for a private design study. Replace them with licensed assets
-before any public or commercial use.
+The Fan Carousel demo lives in `ui/public/carousel/` (its own `app.js`,
+`app.css` and `assets/`), so `npm run build` copies it to `dist/carousel/`.
+It is intentionally kept outside the React bundle.

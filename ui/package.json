@@ -11,7 +11,8 @@
     "lint": "eslint .",
     "format": "prettier --write \"src/**/*.{ts,tsx,css}\"",
     "format:check": "prettier --check \"src/**/*.{ts,tsx,css}\"",
-    "build:root": "BASE=/ vite build --outDir dist-sam --emptyOutDir"
+    "build:root": "BASE=/ vite build --outDir dist-sam --emptyOutDir",
+    "build:subpath": "BASE=/ok/ vite build --outDir dist-ok --emptyOutDir"
   },
   "dependencies": {
     "@react-three/drei": "^10.7.6",
