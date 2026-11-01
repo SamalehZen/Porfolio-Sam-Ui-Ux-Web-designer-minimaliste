@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from 'react'
-import avatarUrl from '@/assets/notch/avatar.jpg'
 import '@/styles/notch.css'
 
 const SUN = (
@@ -103,7 +102,7 @@ export default function Notch() {
         <div className="notch-top">
           <div className="notch-user">
             <div className="notch-avatar">
-              <img src={avatarUrl} alt="Samaleh" />
+              <img src={`${import.meta.env.BASE_URL}media/samaleh-mohamed-hassan-arka.jpg`} alt="Samaleh Mohamed Hassan Arka" width={39} height={39} />
             </div>
             <div className="notch-info">
               <p className="notch-name">Samaleh</p>
