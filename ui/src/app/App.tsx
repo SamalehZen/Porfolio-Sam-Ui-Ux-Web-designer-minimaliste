@@ -5,6 +5,7 @@ import Notch from '@/components/notch/Notch'
 import Splash from '@/components/splash/Splash'
 import { canRender3D } from '@/components/cabin/PlaneWindow'
 import { prefersReducedMotion } from '@/lib/motion'
+import { playShade } from '@/lib/shadeSound'
 
 const GRANTED_KEY = 'mikescv-pass-unlocked'
 const DARK_KEY = 'mikescv-cabin-dark'
@@ -42,6 +43,8 @@ export default function App() {
   }, [])
 
   const applyTheme = useCallback((dark: boolean) => {
+    const changed = (document.documentElement.dataset.theme === 'dark') !== dark
+    if (changed) playShade()
     const root = document.documentElement
     root.classList.remove('is-recolouring')
     void root.offsetWidth

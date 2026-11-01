@@ -6,6 +6,7 @@ import * as THREE from 'three'
 import { RectAreaLightUniformsLib } from 'three/examples/jsm/lights/RectAreaLightUniformsLib.js'
 import { boardingPass, boardingPassBack } from '@/assets'
 import { PASS } from '@/config/geometry'
+import { playCue, unlockAudio } from '@/lib/audio'
 
 /* ------------------------------------------------------------------ */
 /* Measured scene constants                                            */
@@ -495,6 +496,7 @@ function BoardingPass({
   const granted = useRef(false)
   const fade = useRef(0)
   const respawnTimer = useRef(0)
+  const wasInZone = useRef(false)
   const rot = useRef(new THREE.Euler())
   const sway = useRef({ curve: 0, curveV: 0, slant: 0, slantV: 0, x: 0, vx: 0, y: PASS.hoverY, vy: 0 })
 
@@ -533,6 +535,7 @@ function BoardingPass({
     if (granted.current) return
     granted.current = true
     window.clearTimeout(respawnTimer.current)
+    playCue('sparkle')
     setStatus('granted')
     window.setTimeout(onGranted, 1000)
   }, [onGranted, setStatus])
@@ -548,6 +551,7 @@ function BoardingPass({
 
   const onPointerDown = (e: ThreeEvent<PointerEvent>) => {
     e.stopPropagation()
+    unlockAudio()
     try {
       ;(e.target as Element).setPointerCapture(e.pointerId)
     } catch {
@@ -593,10 +597,12 @@ function BoardingPass({
       rotX.current = hB
       rotZ.current = 0
       rot.current.set(hB, 0, 0)
+      playCue('press')
       setStatus((s) => (s === 'granted' || s === 'error' ? s : 'idle'))
       setModeBoth('placed')
     } else {
       setModeBoth('fall')
+      playCue('error')
       angVel.current.set(0.9, 0.5, (Math.random() - 0.5) * 1.4)
       vel.current.set(-rotZ.current * 1.6, 0.3, 0)
       setStatus((s) => (s === 'granted' ? s : 'error'))
@@ -668,6 +674,8 @@ function BoardingPass({
 
       if (!granted.current) {
         const inZone = Math.abs(y - jI / 2 - PASS.slotY) < PASS.slotTol
+        if (inZone && !wasInZone.current) playCue('press')
+        wasInZone.current = inZone
         setStatus((s) => (s === 'granted' ? s : inZone ? 'near' : s === 'error' ? s : 'idle'))
         if (inZone) {
           if (!span.current) span.current = { min: x, max: x }
