@@ -9,7 +9,19 @@ export default tseslint.config(
   {
     files: ['public/**/*.js'],
     languageOptions: {
-      globals: { window: 'readonly', document: 'readonly', localStorage: 'readonly' },
+      globals: {
+        window: 'readonly',
+        document: 'readonly',
+        localStorage: 'readonly',
+        // Service-worker globals (public/sw.js runs in ServiceWorkerGlobalScope).
+        self: 'readonly',
+        caches: 'readonly',
+        clients: 'readonly',
+        fetch: 'readonly',
+        Response: 'readonly',
+        Request: 'readonly',
+        URL: 'readonly',
+      },
     },
     rules: { '@typescript-eslint/no-unused-vars': 'off', 'no-empty': 'off' },
   },

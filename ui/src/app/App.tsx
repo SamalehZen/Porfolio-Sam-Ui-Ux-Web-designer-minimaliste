@@ -1,5 +1,6 @@
 import { Suspense, useCallback, useEffect, useRef, useState } from 'react'
 import AccessPass from '@/components/boarding-pass/AccessPass'
+import InstallPrompt from '@/components/InstallPrompt'
 import Folio from '@/sections/Folio'
 import Notch from '@/components/notch/Notch'
 import Splash from '@/components/splash/Splash'
@@ -139,6 +140,7 @@ export default function App() {
         </Suspense>
       )}
       {splash && <Splash onDone={onSplashDone} />}
+      {phase === 'site' && !splash && <InstallPrompt />}
       <div
         ref={veil}
         aria-hidden="true"

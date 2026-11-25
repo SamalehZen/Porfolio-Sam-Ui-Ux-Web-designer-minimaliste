@@ -1,0 +1,138 @@
+/* ---------- Install prompt ----------
+ * A floating "add to home screen" card. It reuses the folio's own recipe rather
+ * than inventing one: the card surface, the hairline rule, a 16px radius and the
+ * ink / background inversion the rest of the page already leans on.
+ * Anchored bottom centre, above the content but below the splash, so it never
+ * blocks navigation or the header.
+ */
+.install-prompt {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: calc(20px + env(safe-area-inset-bottom, 0px));
+  z-index: 60;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: min(100% - 32px, 460px);
+  margin: 0 auto;
+  padding: 14px 46px 14px 16px;
+  border: 1px solid var(--cs-card-line);
+  border-radius: 16px;
+  background: var(--surface-card);
+  color: var(--ink);
+  box-shadow: 0 20px 44px -22px rgba(var(--shadow-rgb), 0.5);
+  font-family: var(--folio-sans);
+  animation: install-prompt-in 0.32s var(--ease-out) both;
+}
+.install-prompt-logo {
+  flex: none;
+  display: block;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: #2563eb;
+}
+.install-prompt-body {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+.install-prompt-title {
+  margin: 0;
+  font-weight: 500;
+  font-size: 15px;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+.install-prompt-message {
+  margin: 2px 0 0;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 1.35;
+  letter-spacing: -0.01em;
+  color: var(--ink-desc);
+}
+.install-prompt-action {
+  flex: none;
+  padding: 10px 18px;
+  border: 0;
+  border-radius: 12px;
+  background: var(--ink);
+  color: var(--folio-bg);
+  font-family: var(--folio-sans);
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 1;
+  letter-spacing: -0.01em;
+  cursor: pointer;
+  transition:
+    filter 0.16s var(--ease-out),
+    transform 0.16s var(--ease-out);
+}
+.install-prompt-action:hover {
+  filter: brightness(1.06);
+}
+.install-prompt-action:active {
+  transform: scale(0.98);
+}
+.install-prompt-action:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+.install-prompt-close {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--ink-desc);
+  font-family: var(--folio-sans);
+  font-weight: 500;
+  font-size: 19px;
+  line-height: 1;
+  cursor: pointer;
+  transition:
+    background-color 0.16s var(--ease-out),
+    color 0.16s var(--ease-out);
+}
+.install-prompt-close:hover {
+  background: var(--surface-hover);
+  color: var(--ink);
+}
+.install-prompt-close:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+@keyframes install-prompt-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Mobile: the button drops to its own full-width row under the text. */
+@media (max-width: 767.98px) {
+  .install-prompt {
+    flex-wrap: wrap;
+    gap: 12px;
+    padding: 14px 42px 14px 14px;
+  }
+  .install-prompt-body {
+    flex: 1 1 0;
+  }
+  .install-prompt-action {
+    flex-basis: 100%;
+  }
+}
